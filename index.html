@@ -39,7 +39,11 @@
       max-width: calc(var(--card-size)*4 + var(--card-gap)*3);
       justify-content: center;
     }
-    .card { width: var(--card-size); height: var(--card-size); perspective: 600px; }
+    .card {
+      width: var(--card-size);
+      height: var(--card-size);
+      perspective: 600px;
+    }
     .card-inner {
       position: relative;
       width: 100%; height: 100%;
@@ -73,7 +77,12 @@
       background-size: cover;
       background-position: center;
     }
-    .matched .card-inner { visibility: hidden; }
+    /* Nueva animación para ocultar parejas */
+    .card.matched {
+      opacity: 0;
+      transition: opacity 0.5s ease 0s;
+      pointer-events: none;
+    }
     @media (max-width: 500px) { :root { --card-size: 70px; } }
   </style>
 </head>
@@ -136,15 +145,16 @@
         attempts++;
         document.getElementById('attempts').textContent = attempts;
         if (firstCard.src === secondCard.src) {
-          // Delay showing matched cards before hiding
+          // Delay antes de ocultar parejas
           setTimeout(() => {
             firstCard.card.classList.add('matched');
             secondCard.card.classList.add('matched');
             matchedCount++;
             resetTurn();
             if (matchedCount === currentPairs) nextLevel();
-          }, 1500);
+          }, 1000);
         } else {
+          // Delay antes de dar vuelta atrás
           setTimeout(() => {
             firstCard.card.classList.remove('flipped');
             secondCard.card.classList.remove('flipped');
@@ -180,3 +190,4 @@
   </script>
 </body>
 </html>
+
