@@ -39,6 +39,18 @@
       max-width: calc(var(--card-size)*4 + var(--card-gap)*3);
       justify-content: center;
     }
+    button#restartBtn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      background: var(--accent-color);
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
     .card {
       width: var(--card-size);
       height: var(--card-size);
@@ -77,10 +89,9 @@
       background-size: cover;
       background-position: center;
     }
-    /* Nueva animación para ocultar parejas */
     .card.matched {
       opacity: 0;
-      transition: opacity 0.5s ease 0s;
+      transition: opacity 0.5s ease;
       pointer-events: none;
     }
     @media (max-width: 500px) { :root { --card-size: 70px; } }
@@ -90,6 +101,7 @@
   <h1>Memoria</h1>
   <div id="info">Intentos: <span id="attempts">0</span></div>
   <div id="game-board"></div>
+  <button id="restartBtn">Reiniciar partida</button>
   <script>
     const allImages = [
       './images/imagen1.png',
@@ -97,16 +109,24 @@
       './images/imagen3.png',
       './images/imagen4.png',
       './images/imagen5.png',
-      './images/imagen6.png'
+      './images/imagen6.png',
+      './images/imagen7.png',
+      './images/imagen8.png',
+      './images/imagen9.png',
+      './images/imagen10.png'
     ];
 
     let currentPairs = 2;
     const maxPairs = allImages.length;
+    const attemptLimit = 40;
     let attempts = 0;
     let matchedCount = 0;
     let firstCard = null;
     let secondCard = null;
     let lockBoard = false;
+
+    const restartBtn = document.getElementById('restartBtn');
+    restartBtn.addEventListener('click', restartGame);
 
     function startLevel() {
       matchedCount = 0;
@@ -144,8 +164,8 @@
         lockBoard = true;
         attempts++;
         document.getElementById('attempts').textContent = attempts;
+        if (attempts >= attemptLimit) return gameOver();
         if (firstCard.src === secondCard.src) {
-          // Delay antes de ocultar parejas
           setTimeout(() => {
             firstCard.card.classList.add('matched');
             secondCard.card.classList.add('matched');
@@ -154,7 +174,6 @@
             if (matchedCount === currentPairs) nextLevel();
           }, 1000);
         } else {
-          // Delay antes de dar vuelta atrás
           setTimeout(() => {
             firstCard.card.classList.remove('flipped');
             secondCard.card.classList.remove('flipped');
@@ -174,8 +193,25 @@
         currentPairs++;
         setTimeout(startLevel, 800);
       } else {
-        setTimeout(() => alert(`¡Completaste el juego en ${attempts} intentos!`), 300);
+        setTimeout(() => {
+          alert(`¡Completaste el juego en ${attempts} intentos!`);
+          restartBtn.style.display = 'block';
+        }, 300);
       }
+    }
+
+    function gameOver() {
+      alert('Has superado los 40 intentos. Juego terminado.');
+      lockBoard = true;
+      restartBtn.style.display = 'block';
+    }
+
+    function restartGame() {
+      attempts = 0;
+      currentPairs = 2;
+      document.getElementById('attempts').textContent = attempts;
+      restartBtn.style.display = 'none';
+      startLevel();
     }
 
     function shuffle(array) {
