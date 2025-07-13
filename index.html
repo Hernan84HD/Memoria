@@ -118,7 +118,7 @@
 
     let currentPairs = 2;
     const maxPairs = allImages.length;
-    const attemptLimit = 40;
+    const attemptLimit = 64;
     let attempts = 0;
     let matchedCount = 0;
     let firstCard = null;
@@ -201,7 +201,7 @@
     }
 
     function gameOver() {
-      alert('Has superado los 40 intentos. Juego terminado.');
+      alert(`Has superado los ${attemptLimit} intentos. Juego terminado.`);
       lockBoard = true;
       restartBtn.style.display = 'block';
     }
