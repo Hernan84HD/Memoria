@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juego de Memoria</title>
+  <!--
+    Para usar en GitHub Pages:
+    1. Crea un directorio llamado "images" en la raíz de tu repo.
+    2. Sube tus imágenes (100×100px o 200×200px) con nombres claros: e.g., image1.png, image2.png, etc.
+    3. Este archivo debe llamarse index.html en la raíz del repo.
+  -->
   <style>
     :root {
       --card-size: 100px;
@@ -93,13 +99,14 @@
   <div id="info">Intentos: <span id="attempts">0</span></div>
   <div id="game-board"></div>
   <script>
+    // Asegurate de subir tus imágenes a "images/" y nombrarlas image1.png ... image6.png
     const allImages = [
-      'ruta/a/imagen1.png',
-      'ruta/a/imagen2.png',
-      'ruta/a/imagen3.png',
-      'ruta/a/imagen4.png',
-      'ruta/a/imagen5.png',
-      'ruta/a/imagen6.png'
+      'images/imagen1.png',
+      'images/imagen2.png',
+      'images/imagen3.png',
+      'images/imagen4.png',
+      'images/imagen5.png',
+      'images/imagen6.png'
     ];
 
     let currentPairs = 2;
